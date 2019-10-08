@@ -3,7 +3,8 @@ import numpy as np
 class poisson_2d:
     def __init__(self):
         self.range = [0.0, 1.0]
-        
+
+#solution        
     def velocity(self, x):
         u = np.zeros((x.shape[0], 1))
         
