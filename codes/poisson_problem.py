@@ -3,7 +3,7 @@ import numpy as np
 class poisson_2d:
     def __init__(self):
         self.range = [0.0, 1.0]
-    
+        
     def velocity(self, x):
         u = np.zeros((x.shape[0], 1))
         
@@ -20,7 +20,7 @@ class poisson_2d:
         print(range(x.shape[0]))
         for i in range(x.shape[0]):
 
-            der_u[i,0] = np.pi*np.sin(np.pi*x[i,1]) * np.cos(np.pi*x[i,0])
+            der_u[i,0] = np.pi*np.cos(np.pi*x[i,0]) * np.sin(np.pi*x[i,1])
             der_u[i,1] = np.pi*np.sin(np.pi*x[i,0]) * np.cos(np.pi*x[i,1])
         
         return der_u
@@ -41,7 +41,7 @@ class poisson_2d:
         # f2 = np.zeros((x.shape[0], 1))
     
         for i in range(x.shape[0]):
-            f[i] = 2.0*np.pi*np.pi *  x[i,0] * np.sin(np.pi * x[i,0]) * np.sin(np.pi * x[i,1]) -1.0*np.pi* np.cos(np.pi * x[i,0])* np.sin(np.pi * x[i,1]) #* x[i,0]
+            f[i] = 2.0*np.pi*np.pi  * np.sin(np.pi * x[i,0]) * np.sin(np.pi * x[i,1]) *  x[i,0]   -1.0*np.pi* np.cos( np.pi * x[i,0] )* np.sin( np.pi * x[i,1] ) #* x[i,0]
         #f2[i] = -1.0*np.pi* np.cos(np.pi * x[i,0])* np.sin(np.pi * x[i,1])
         #   for j in range(2):
         #  f1[i] *= x[i,j] * np.sin(np.pi*x[i,j])

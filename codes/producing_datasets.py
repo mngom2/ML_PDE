@@ -2,7 +2,7 @@ import numpy as np
 import csv
 import poisson_problem
 
-N = 16000
+N = 2000
 
 class sampling_from_rectangle:
 	def __init__(self, x_range, y_range):
