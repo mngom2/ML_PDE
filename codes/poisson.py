@@ -118,7 +118,7 @@ def main(argv):
     
     #    sol_bou = tf.placeholder(tf.float64, [None, 1])
     
-    sum_of_second_derivatives = np.dot(grad, sol_der) + np.sum (np.dot (value_int, sol_der2)) #0.0
+    sum_of_second_derivatives = np.dot(grad, sol_der) + (np.dot (value_int, sol_der2)) #0.0
     sum_of_second_derivatives_sensor = 0.0
      #grad[0]*sol_der[0] + grad[1]*sol_der[1] + value_int[0] * sol_der2[0] + value_int[1] * sol_der2[1]
     print(tf.size(sol_der2))

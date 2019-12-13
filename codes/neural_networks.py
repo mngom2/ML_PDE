@@ -6,7 +6,7 @@ class neural_network:
                  n_output,
                  n_hidden_units,
                  weight_initialization=tf.contrib.layers.xavier_initializer(),
-                 activation_hidden=tf.sin ,
+                 activation_hidden=tf.nn.sigmoid,
                  name='parameter_'):
         
         self.n_input = n_input
@@ -41,7 +41,7 @@ class neural_network:
             
             layer = self.activation_hidden(layer)
     
-        return tf.matmul(layer, self.weights[self.name+str(self.number_of_layers)]) + self.biases[self.name+str(self.number_of_layers)]
+        return (tf.matmul(layer, self.weights[self.name+str(self.number_of_layers)])) + self.biases[self.name+str(self.number_of_layers)]
     
 
     def first_derivatives(self, X):
