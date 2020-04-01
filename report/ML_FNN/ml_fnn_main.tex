@@ -143,7 +143,7 @@ while the output of a neural network whose goal is to approximate a 1D function 
 \begin{equation}\label{Eq: NN1d}
   \hat{u}(x) = \phi_0 + \sum_{k = 1}^N \lambda_{k} \sigma\left( w_{k}x + \phi_k \right),
 \end{equation}
-Therefore, by taking the activation function to be $\cos$ in Eq. \ref{Eq: NN1d}, one obtain a formulation equivalent to the Fourier decomposition. However as we empirically show below, the equivalency is not straightforward and one need to train the network with a specific loss function in order to obtain satisfactory results.
+Therefore, by taking the activation function to be $\cos$ in Eq. \ref{Eq: NN1d}, one obtain a formulation equivalent to the Fourier decomposition. However as we empirically show below, the equivalency is not straightforward and one needs to train the network with a specific loss function in order to obtain satisfactory results.
 % Barron (\cite{Barron}) has proved that any function could be approximated by a single layer neural network with sigmoidal activation functions i.e with an activation function $\sigma$ s.t $\sigma(x) -> 0$ when $x -> -\infty$ and $\sigma(x) -> 1$ when $x -> \infty$. Leshno et al. \cite{Leshno} have proved that multilayer feedforward (define) networks with a nonpolynomial activation function can approximate any function. \\
 
 % Here, we make use of the Fourier representation  of a T-periodic function $u$ $L^2(\mathbf R^M)$ and use the cosine function as the activation function of our network. $S_N u$ is defined as
@@ -472,19 +472,50 @@ First, we solve the Poisson Equation
 \begin{equation}\label{Poisson}
     -\Delta u = \cos(\pi x),\;\;\; x \in [-1,1].
 \end{equation}
-with the constructed FNN. Tto assess the quality of the FNN solution, we can compare it to the exact solution of this equation which is given by $u = 1/(\pi^2)\cos(\pi x)$.
+with the constructed FNN. Tto assess the quality of the FNN solution, we can compare it to the exact solution of this equation which is given by $u = \frac{1}{\pi^2}\cos(\pi x)$.
+
+
   \begin{figure}[!htb]
     \centering
-    \includegraphics[width=.8\textwidth]{FNNvsexPoisson1d.eps}
+    \includegraphics[width=.8\textwidth]{poisson_exvsFNNL2.eps}
     \caption{Comparison between the FNN and the exact solutions}
     \label{fig:FNNvsexactPoisson}
 \end{figure}
-In figure (\ref{fig:FNNvsexactPoisson}) we see that the solution obtained by the FNN is a good approximation of the exact one. The order of the relative error between the two is $1e-6$.\\
 
-We then solve the heat equation \textcolor{red}{Put in align mode}
-\begin{equation}\label{Heat}
-    \frac{\partial u}{\partial t} = \frac{\partial^2 u}{\partial^2 x},\; x \in [-1,1] \;\;\; u(0,x) = u_0(x) = 6 \sin(\pi x), \;\;\; u(t, -1) = u(t, 1).
-\end{equation}
+ \begin{table}[!h]
+  \begin{center}
+\begin{tabular}{ |c|c|c|c|c| } 
+\hline
+$w_k$ & $\phi_k$ & $\lambda_k$& $\phi_0$ \\
+\hline
+$-3.77424453e-10$ & $-4.42730681$ &$4.90842033e-05$& \\ 
+$-1.16548318e-10$&$ 2.46210794$ & $-1.45660922e-05$& $0$ \\ 
+$1.00000000$& $ 3.14159265 \approx \pi$ & $-1.01321184e-01 \approx -1/\pi^2$& \\ 
+$ -1.18183192e-09$& $ 0.79153364 $ & $-1.60990031e-06$& \\ 
+\hline
+\end{tabular}
+\caption{Optimal weights and biases of the FNN to solve the Poisson equation Eq. \ref{Poisson}, $k = 1\cdots4$ }\label{tabPoisson}
+\end{center}
+\end{table}
+
+
+We compare the exact solution to the FNN one in figure (\ref{fig:FNNvsexactPoisson}) and we report in table (\ref{tabPoisson}) the weights and biases of the FNN. The output is 
+$$\hat{u}(x) = -\frac{1}{\pi^2}\cos(\pi x + \pi) + o(1e-5).$$
+which is an order $5$th approximation of the exact solution. We obtain an added advantage to using our network when seeking periodic solutions of differential equations which is that it produces a closed (exact?) formula for the solution.
+
+We then solve the heat equation 
+\begin{align}\label{Heat}
+    \frac{\partial u}{\partial t} &= \frac{\partial^2 u}{\partial^2 x},\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\;\; \;x \in [-1,1], \; \;t \in [0,\infty[ \nonumber \\
+    u(0,x) &= u_0(x) = \sin(\pi x),\\
+    u(t, -1) &= u(t, 1) \nonumber
+\end{align}
+
+  \begin{figure}[!htb]
+    \centering
+    \includegraphics[width=.9\textwidth]{fnnvsexactheat.eps}
+    \caption{Comparison between the FNN and the exact solutions for the heat equation}
+    \label{fig:fnnvsexactheat}
+\end{figure}
 To account of the time dependency, we rewrite the heat equation using separation of variables method. To that end, we set $u(x,t) = X(x)T(t)$ which transforms the equation into 
 $$X(x)T'(t) = X''(x)T(t).$$
 We rewrite the cost function as follows 
@@ -494,16 +525,8 @@ We rewrite the cost function as follows
     &+\alpha_4||\hat{X}(x - 2) - \hat{X}(x)||^2  \\
    &+ \alpha_5||\hat{T}_0(x) - \hat{u}_0(x)||^2
 \end{align*}
-Since the solution of Eq. (\ref{Heat}) is separable, we separate our network into two independant subnetworks. One with the FNN architecture and one with a regular architecture (with a $\tanh$ activation function.) \textcolor{red}{PUT figure of architecture here.}
-
-
-  \begin{figure}[!htb]
-    \centering
-    \includegraphics[width=.8\textwidth]{NNheatsol.eps}
-    \caption{Comparison between the FNN and the exact solutions}
-    \label{fig:fourvsNNcompPer}
-\end{figure}
-
+and separate our network into two independant subnetworks. One with the FNN architecture and one with a regular architecture (with a $\tanh$ activation function.)\textcolor{red}{PUT figure of architecture here.}\\ 
+ Figure (\ref{fig:fnnvsexactheat}) shows a comparison between the FNN solution and the exact one which is $u(x) = \sin(\pi x)e^{-\pi^2 t}$ for $t \in [0,4]$. The error between the two is of order $6$. \\
 Finally, we solve the following system of differential equations obtained from \cite{Teschl2012} 
 \begin{align}
     \frac{\partial x_1}{\partial t} &= -\pi  x_2 + x_1(1 - x_1^2 - x_2^2) \nonumber \\ 
