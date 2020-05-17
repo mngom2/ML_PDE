@@ -129,7 +129,7 @@ The goal of our network is to approximate the Fourier approximation $S_N u$ of $
  $$
  or equivalently
   $$
- x^2 \approx ( \cos(\pi w_1 x) - 1 )\frac{2!}{\pi^2 w_1^2} \approx \phi_0 - \lambda_1 \cos(\pi w_1 x)
+ x^2 \approx (1 - \cos(\pi w_1 x) )\frac{2!}{\pi^2 w_1^2} \approx \phi_0 - \lambda_1 \cos(\pi w_1 x)
  $$
  is a good approximation of $x^2$, is not the desired output. To obtain the Fourier representations of the target functions, the weights from the input to the hidden layer need to be approximately integers. This can be achieved by solving a mixed integer optimization problem which is out of the scope of this paper or by modifying the loss function as follows
   \begin{equation}\label{Eq:lossfunction_good}
