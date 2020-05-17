@@ -184,9 +184,8 @@ $$
 % \]
 
 
-Furthermore, we assume the weights $w_k$ are drawn from a normal distribution $\mathcal N(0, m^2)$ and the weights $\lambda_k$ are drawn from a normal distribution $\mathcal N(0, v^2)$. The goal is to find values of $m$ and $v$ such that the variances at each of the layers of the network are equal during the first forward pass i.e $$\sigma^2(X) = \sigma^2(X_k) = \sigma^2(Y),\; \; \forall k=1\cdots N$$.
-\begin{enumerate}
-    \item \textbf{Initializing the input layer to hidden layer weights  $\mathbf{w_k}$}: 
+Furthermore, we assume the weights $w_k$ are drawn from a normal distribution $\mathcal N(0, m^2)$ and the weights $\lambda_k$ are drawn from a normal distribution $\mathcal N(0, v^2)$. The goal is to find values of $m$ and $v$ such that the variances at each of the layers of the network are equal during the first forward pass i.e $$\sigma^2(X) = \sigma^2(X_k) = \sigma^2(Y),\; \; \forall k=1\cdots N$$.\\
+\textbf{Initializing the input layer to hidden layer weights  $\mathbf{w_k}$}: 
     % $$\mu(w_k x) = 0 \;\; \text{and}\;\; \sigma^2(w_k x) = m^2/3.$$
     We first compute the mean of the node $k$ of the hidden layer. To that aim, we use the following theorem called the Law Of The Unconscious Statistician (LOTUS).
 \begin{theorem}
@@ -195,7 +194,7 @@ $$\int_{\mathbf{R^2}} |h(x,y)| f_{(X,Y)}(x,y) dx dy < +\infty,\;\; \text{then, w
 $$\mu\left(h(X,Y)\right) = \int_{\mathbf{R^2}} h(x,y) f_{(X,Y)}(x,y) dx dy  $$
 \end{theorem}
 
-Therefore, knowing that the joint probability distribution of the two independent random variables $W_k$ and $X$ is $f_{(W_k,X)}(x,y) = \frac{1}{2} \cdot \frac{1}{w \sqrt{2\pi}} e^{\frac{-w_k^2}{2m^2}}$, we obtain (using $h(w_k,x) = \cos(\pi w_k x)$ in the above theorem) 
+Therefore, knowing that the joint probability distribution of the two independent random variables $W_k$ and $X$ is $$f_{(W_k,X)}(x,y) = \frac{1}{2} \cdot \frac{1}{w \sqrt{2\pi}} e^{\frac{-w_k^2}{2m^2}},$$ we obtain (using $h(w_k,x) = \cos(\pi w_k x)$ in the above theorem) 
 \begin{equation}\label{Eq:muxk}
     \mu(X_k) = \mu(\cos(\pi W_k X)) = \int_{-1}^{1} \int_{-\infty}^{+\infty}\frac{1}{2} \cos(\pi w_k x)\frac{1}{w \sqrt{2\pi}} e^{\frac{-w_k^2}{2m^2}}\; dw_k dx.
 \end{equation}
@@ -226,9 +225,8 @@ Because we want the variance of the output of the hidden layer to be equal to th
     \frac{1}{3} = \frac{1}{2} + \frac{1}{4\sqrt{2\pi}}\frac{erf(\sqrt{2}m\pi)}{m}-\left(\frac{1}{m\sqrt{2\pi}}erf\left(\frac{m\pi}{\sqrt{2}}\right) \right)^2 .
 \end{equation*}
 which admits a unique solution $m \approx 0.6959$. However, this value being small, this means that imposing this type of initialization on the hidden layer weights will cause the FNN to capture fewer Fourier modes than we are seeking. Therefore, we initialize these weights using a normal distribution $\mathcal N(0,5)$ which means $m = \sqrt{5}$. This value was picked by trial and error and as showed in the results section \ref{subsec:results}, allows us to recover the first 5 Fourier nodes of a periodic function. Plugging in $m$ in equation (\ref{Eq:varxk_last}) gives
-$$\sigma^2(X_k) \approx .5128$$. 
-    
-    \item \textbf{Initializing the hidden layer to output layer weights  $\mathbf{\lambda_k}$}: Now, for the output $y$, since $\Lambda_k$ and $\cos(W_k X)$ are independent, we can write $$\mu(Y) = \sum_{k = 1}^N \mu(\lambda_k) \mu(\cos(w_k x  ))$$ and $$\sigma^2(Y) = \sum_{k = 1}^N \sigma^2 (\Lambda_k)  \left(\sigma^2\left(\cos(W_k X)\right)+\mu^2\left(\cos(W_k X)\right) \right) +  \mu^2(\Lambda_k)\sigma^2\left(\cos(W_k X)\right)$$ 
+$$\sigma^2(X_k) \approx .5128$$. \\
+ \textbf{Initializing the hidden layer to output layer weights  $\mathbf{\lambda_k}$}: Now, for the output $y$, since $\Lambda_k$ and $\cos(W_k X)$ are independent, we can write $$\mu(Y) = \sum_{k = 1}^N \mu(\lambda_k) \mu(\cos(w_k x  ))$$ and $$\sigma^2(Y) = \sum_{k = 1}^N \sigma^2 (\Lambda_k)  \left(\sigma^2\left(\cos(W_k X)\right)+\mu^2\left(\cos(W_k X)\right) \right) +  \mu^2(\Lambda_k)\sigma^2\left(\cos(W_k X)\right)$$ 
     where $\sigma^2 (\Lambda_k) = v^2$ and $\mu(\Lambda_k) = 0$. This leads to
 \begin{equation}\label{Eq:vary}
     \sigma^2(Y) = N\left[ v^2\left[\frac{1}{2} + \frac{1}{4\sqrt{2\pi}}\frac{erf\left(\sqrt{2}m\pi\right)}{m}\right] \right].
@@ -238,7 +236,7 @@ Since we want $\sigma^2(Y) = \sigma^2(X_k) \approx .5128$, we get
     v^2 = \frac{0.5128}{N\left(\frac{1}{2} + \frac{1}{4\sqrt{2\pi}}\frac{erf\left(\sqrt{2}m\pi\right)}{m}\right)} 
 \end{equation}
 where $m = \sqrt{5}$.
-\end{enumerate}
+
 
 
 
@@ -562,7 +560,7 @@ We rewrite the cost function as follows
     &+\alpha_4||\hat{X}(x - 2) - \hat{X}(x)||^2  \\
    &+ \alpha_5||\hat{T}_0(x) - \hat{u}_0(x)||^2
 \end{align*}
-to incorporate the boundary and initial conditions and separate the network into two independant subnetworks. The first with the PIFNN architecture that deals with the space dependent function $X$ and second with a regular architecture (with a $\tanh$ activation function) that works on the time dependent function $T$. The left part of figure (\ref{fig:fnnvsexactheat}) corresponds the solution produced by the PIFNN and the right part shows the error between that solution and the exact one which is $$u(x) = \sin(\pi x)e^{-\pi^2 t}, \;\; t \in [0,4]$$. We note from the figure that error between the two is of order $6$. \\
+to incorporate the boundary and initial conditions and separate the network into two independant subnetworks. The first with the PIFNN architecture that deals with the space dependent function $X$ and second with a regular architecture (with a $\tanh$ activation function) that works on the time dependent function $T$. The left part of figure (\ref{fig:fnnvsexactheat}) corresponds the solution produced by the PIFNN and the right part shows the error between that solution and the exact one which is $u(x) = \sin(\pi x)e^{-\pi^2 t}, \; t \in [0,4]$. We note from the figure that error between the two is of order $6$. \\
 % Finally, we solve the following system of differential equations obtained from \cite{Teschl2012} 
 % \begin{align}
 %     \frac{\partial x_1}{\partial t} &= -\pi  x_2 + x_1(1 - x_1^2 - x_2^2) \nonumber \\ 
