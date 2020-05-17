@@ -527,9 +527,9 @@ false setoverprint}}
 
 \captionsetup[figure]{labelformat=simple, labelsep=none, skip=10pt, labelfont=bf}
 \captionsetup[table]{labelformat=simple, labelsep=none, skip=10pt, labelfont=bf}
-\renewcommand{\thefigure}{\arabic{figure}\enspace }
+\renewcommand{\thefigure}{\arabic{figure}} %%you took out \enspace before last }
 
-\renewcommand{\thetable}{\arabic{table}\enspace }
+\renewcommand{\thetable}{\arabic{table}} %%you took out \enspace
 
 \renewcommand\figurename{\textbf{FIGURE}}%%
 \renewcommand\tablename{\textbf{TABLE}} %%
@@ -3246,8 +3246,8 @@ Volume\ \@jvol, Article ID\ \@artid, \thepage~pages\par%
         \csname the##1\endcsname\quad}
     \fi
   \fi%
-  \renewcommand\thefigure{\@Alph\c@section\arabic{figure}\enspace }%
-  \renewcommand\thetable{\@Alph\c@section\arabic{table}\enspace }%
+  \renewcommand\thefigure{\@Alph\c@section\arabic{figure}\enspace}%\enspace
+  \renewcommand\thetable{\@Alph\c@section\arabic{table}\enspace}%\enspace
   \renewcommand\theequation{\@Alph\c@section\arabic{equation}}%
 }{%
   \@ppsaveapp\@pprestoresec}
