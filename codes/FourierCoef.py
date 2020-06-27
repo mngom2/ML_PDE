@@ -127,8 +127,8 @@ def main(argv):
         
         data = scipy.io.loadmat('data/input_data.mat')
         x = data['x'].flatten()[:,None]
-        y_per1 = data['y'].flatten()[:,None]
-        y_per2 = data['x1'].flatten()[:,None]
+        y_per1 = data['x_plusper'].flatten()[:,None]
+        y_per2 = data['x_minusper'].flatten()[:,None]
         
        
         int_draw = x
