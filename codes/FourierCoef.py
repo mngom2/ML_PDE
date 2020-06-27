@@ -125,7 +125,7 @@ def main(argv):
         
         sess.run(init)
         
-        data = scipy.io.loadmat('data/funlog.mat')
+        data = scipy.io.loadmat('data/input_data.mat')
         x = data['x'].flatten()[:,None]
         y_per1 = data['y'].flatten()[:,None]
         y_per2 = data['x1'].flatten()[:,None]
