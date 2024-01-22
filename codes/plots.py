@@ -55,8 +55,8 @@ restore_name = 'test_model/1_layer_sq_loss_100_m_iter_50000_rs_42_nodes_4'
 #problem = poisson_problem.poisson_1d()
 problem = obj_fun.objfun()
 
-neural_network = neural_networks_fourier.neural_network(NUM_INPUTS, 1, HIDDEN_UNITS,n_nodes)
-#neural_network = neural_networks.neural_network(NUM_INPUTS, 1, HIDDEN_UNITS)
+#neural_network = neural_networks_fourier.neural_network(NUM_INPUTS, 1, HIDDEN_UNITS,n_nodes)
+neural_network = neural_networks.neural_network(NUM_INPUTS, 1, HIDDEN_UNITS)
 biases = neural_network.biases
 
 int_var = tf.placeholder(tf.float64, [None, NUM_INPUTS]) 
