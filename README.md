@@ -1,9 +1,9 @@
 # Code for the paper "Fourier Neural Networks as Function Approximators and Differential Equation Solvers"
 Available at https://onlinelibrary.wiley.com/doi/abs/10.1002/sam.11531
 
-1. Increase N_points in `codes/dataset_prod.m` and set `batchsize=N_points` in `codes/FourierCoeff.py` then do `python3 FourierCoeff.py` to run. The architecture of the paper is implemented in `neural_network_fourier.py`, if you want to compare with a neural network without the regularization and initialization schemes, comment line 58 in `FourierCoeff.py` and uncomment line 59.
-
-2. To change (m = stdev), go to `neural_networks_fourier.py` and change `stdev at line 22` (w01) (m = stdev)
+1. The architecture of the paper is implemented in `neural_network_fourier.py`, if you want to compare with a neural network without the regularization and initialization schemes, comment line 58 in `codes/FourierCoeff.py` and uncomment line 59.
+2. Increase N_points in `codes/dataset_prod.m` and set `batchsize=N_points` in `codes/FourierCoeff.py` then do `python3 FourierCoeff.py` to run.
+3. To change (m = stdev), go to `codes/neural_networks_fourier.py` and change `stdev at line 22` (w01) (m = stdev)
 
 
 # Citation
