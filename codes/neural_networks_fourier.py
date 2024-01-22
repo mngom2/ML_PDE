@@ -5,35 +5,35 @@ import numpy as np
 
 
 
-def ngom_weight_ini(n_input, n_nodes):
+def custom_weight_ini(n_input, n_nodes):
     
     weights= []
-    W01, W12 = ngom_init(n_input, n_nodes)
+    W01, W12 = custom_init(n_input, n_nodes)
     weights.append(W01)
     weights.append(W12)
     print(weights)
    
     return weights
 
-def ngom_init(in_dim, out_dim):
+def custom_init(in_dim, out_dim):
     pi = np.pi
-    ngom_stddev1 = 0.6959  #0.13204344312966899640 #np.sqrt((pi * pi/3. - .5)*6./(in_dim * pi*pi)) #np.sqrt((pi*pi/3.0 - .5 - 4.0/(pi*pi))*6/(in_dim * pi*pi))    #np.sqrt(2/(in_dim + out_dim))
-    ngom_stddev2 =  np.sqrt(0.512772/ (out_dim * (0.544603))) #np.sqrt(1./(out_dim)) #np.sqrt(1./(3. *out_dim*(1./3.+ 0.3099)))#np.sqrt(1./(out_dim))#np.sqrt(0.505606/(out_dim * (0.506218)))#np.sqrt(pi**2/(3 *out_dim*(pi**2/3 + 0.944871837829830155)))  #np.sqrt((1./3.*pi**2 - 0.83) * 3./(out_dim * pi**2))   #np.sqrt(1./out_dim)  #np.sqrt((pi*pi/3.0 )/(out_dim * (pi*pi/3.0 - 4.0/(pi*pi))))
+    custom_stddev1 = 0.6959  #0.13204344312966899640 #np.sqrt((pi * pi/3. - .5)*6./(in_dim * pi*pi)) #np.sqrt((pi*pi/3.0 - .5 - 4.0/(pi*pi))*6/(in_dim * pi*pi))    #np.sqrt(2/(in_dim + out_dim))
+    custom_stddev2 =  np.sqrt(0.512772/ (out_dim * (0.544603))) #np.sqrt(1./(out_dim)) #np.sqrt(1./(3. *out_dim*(1./3.+ 0.3099)))#np.sqrt(1./(out_dim))#np.sqrt(0.505606/(out_dim * (0.506218)))#np.sqrt(pi**2/(3 *out_dim*(pi**2/3 + 0.944871837829830155)))  #np.sqrt((1./3.*pi**2 - 0.83) * 3./(out_dim * pi**2))   #np.sqrt(1./out_dim)  #np.sqrt((pi*pi/3.0 )/(out_dim * (pi*pi/3.0 - 4.0/(pi*pi))))
     w01 = tf.Variable(tf.truncated_normal([in_dim, out_dim], mean = 0.0, stddev=np.sqrt(5.) , dtype=tf.float64), dtype=tf.float64)
-    #ngom_stddev2 =np.sqrt(0.5164/ (out_dim * (0.5305)))
+    #custom_stddev2 =np.sqrt(0.5164/ (out_dim * (0.5305)))
     #w01 = tf.Variable(tf.random_uniform([in_dim,out_dim] ,minval = 0.0, maxval = 4.,dtype=tf.float64), dtype=tf.float64)
     ##for Bratu
     #w01 = tf.Variable(tf.random_uniform([in_dim,out_dim] ,minval = 0.0, maxval = 4.,dtype=tf.float64), dtype=tf.float64)
     ###end for bratu
     
     
-    w12 = tf.Variable(tf.truncated_normal([out_dim,1], stddev=ngom_stddev2, dtype=tf.float64), dtype=tf.float64)
+    w12 = tf.Variable(tf.truncated_normal([out_dim,1], stddev=custom_stddev2, dtype=tf.float64), dtype=tf.float64)
    
     
     return w01, w12
 
 
-def ngom_bias_ini(out_dim):
+def custom_bias_ini(out_dim):
     pi = np.pi
     biases= []
     stddev_bias = pi/np.sqrt(3.0)
@@ -64,8 +64,8 @@ class neural_network:
         
         self.weights = {}
         self.biases = {}
-        self.weight_initialization = ngom_weight_ini(self.n_input, self.n_nodes)
-        self.bias_initialization = ngom_bias_ini(self.n_nodes)
+        self.weight_initialization = custom_weight_ini(self.n_input, self.n_nodes)
+        self.bias_initialization = custom_bias_ini(self.n_nodes)
         
         self.number_of_layers = len(self.n_hidden_units)
         
